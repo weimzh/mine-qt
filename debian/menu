@@ -1,0 +1,2 @@
+?package(mine):needs="X11" section="Games/Board"\
+  title="Minesweeper" command="/usr/games/mine"

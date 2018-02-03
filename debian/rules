@@ -1,0 +1,66 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	qmake
+	touch configure-stamp
+
+
+build: build-stamp
+
+build-stamp: configure-stamp  
+	dh_testdir
+	$(MAKE)
+	touch $@
+
+clean: 
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+
+	$(MAKE) distclean
+	rm -f Makefile
+
+	dh_clean 
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep  
+	dh_installdirs
+
+	$(MAKE) install INSTALL_ROOT=$(CURDIR)/debian/mine
+	mv -f $(CURDIR)/debian/mine/usr/bin $(CURDIR)/debian/mine/usr/games
+	sed "s/\/usr\/bin/\/usr\/games/" \
+		$(CURDIR)/debian/mine/usr/share/applications/kde/mine.desktop \
+		> $(CURDIR)/debian/mine/usr/share/applications/kde/mine.desktop.new
+	rm -f $(CURDIR)/debian/mine/usr/share/applications/kde/mine.desktop
+	mv -f $(CURDIR)/debian/mine/usr/share/applications/kde/mine.desktop.new \
+		$(CURDIR)/debian/mine/usr/share/applications/kde/mine.desktop
+
+binary-indep: install
+
+binary-arch: install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs 
+	dh_installdocs
+	dh_installexamples
+	dh_installmenu
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=mine
+Icon=mine
+Name[zh_CN]=扫雷
+Exec=/usr/bin/mine
+Path=/usr/share/apps/mine/
+Terminal=false
+Type=Application
+GenericName=Logic Game
+GenericName[zh_CN]=逻辑游戏
+KDE-StartupNotify=no

@@ -1,0 +1,12 @@
+Source: mine
+Section: games
+Priority: optional
+Maintainer: Wei Mingzhi <whistler@openoffice.org>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.1
+
+Package: mine
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Qt-based Minesweeper game
+ Qt-based minesweeper game
